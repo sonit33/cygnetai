@@ -57,6 +57,7 @@ export default function Home() {
 
   return (
     <>
+      <h3 className="text-lg text-blue-800">I am Da Vinci. Your math teacher. Ask me anything.</h3>
       <div className="items-baseline">
         <div className="flex">
           <input
