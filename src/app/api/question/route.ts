@@ -34,14 +34,15 @@ export async function POST(request: Request): Promise<Response> {
 
 function decorate(userQuestion: string): string {
   const instructions = [
-    "My question follows ##=> below",
     "If I ask something that is not related to math, respectfully decline",
     "While solving a math problem, let's think step by step but only provide the first step of the solution",
-    "Ask me for the next step",
+    "Ask me for the next",
+    "Verify my response for the step",
+    "If its not correct, ask me to try again",
     "If I ask you to solve the problem without attempting, respectfully decline",
     "Use markdown syntax",
     "Enclose numbers and mathematical expressions in dollar signs",
     "Use active voice and be succinct",
   ];
-  return `${instructions.join(". ")} ##=> ${userQuestion}`;
+  return `Instructions: ${instructions.join(". ")} \n Prompt: ${userQuestion}`;
 }

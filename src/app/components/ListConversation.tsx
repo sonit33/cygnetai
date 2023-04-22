@@ -10,10 +10,19 @@ interface Props {
 
 export default function ListConversation({ chatHistory }: Props) {
   const list = chatHistory.map((h) => {
-    <div key={h.timestamp}>
-      <div>{h.user}</div>
-      <AssistantResponse contents={h.assistant}></AssistantResponse>
-    </div>;
+    return (
+      <div key={h.timestamp}>
+        <AssistantResponse contents={h.assistant}></AssistantResponse>
+        <div className="font-bold mt-2">{h.user}</div>
+      </div>
+    );
   });
-  return <>{list}</>;
+  if (list.length > 0)
+    return (
+      <>
+        <div className="border-t border-gray-200"></div>
+        {list}
+      </>
+    );
+  else return <></>;
 }
