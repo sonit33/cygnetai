@@ -31,6 +31,7 @@ COPY . .
 
 # If using npm comment out above and use below instead
 RUN npm run build
+RUN npm run test
 
 # Production image, copy all the files and run next
 FROM base AS runner
