@@ -11,7 +11,7 @@ export default function BotResponse() {
           <div className="p-2">Long answer from Open AI</div>
         </div>
       </div>
-      <div className="flex flex-row-reverse p-2">
+      <div className="flex flex-row-reverse gap-2 p-2">
         <div className="">
           <ClipboardIcon className="h-4 w-4 text-black cursor-pointer" />
         </div>
