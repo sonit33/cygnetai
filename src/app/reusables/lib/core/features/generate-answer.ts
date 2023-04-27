@@ -1,7 +1,7 @@
 import { getOpenApiKey } from "../../utils/env-reader";
-import { toReadableStream } from "@/app/lib/utils/readable-stream";
+import { toReadableStream } from "../../utils/readable-stream";
 import { ChatCompletionPayload } from "../types/ChatCompletionPayload";
-import { GPTMessage } from "@/app/lib/core/types/GPTMessage";
+import { GPTMessage } from "../types/GPTMessage";
 
 export function generateAnswer(history: Array<GPTMessage>): Promise<ReadableStream<any>> {
   const encoder = new TextEncoder();

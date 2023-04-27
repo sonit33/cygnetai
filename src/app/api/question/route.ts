@@ -1,5 +1,5 @@
-import { generateAnswer } from "@/app/lib/core/features/generate-answer";
-import { CoachGPT } from "@/app/lib/utils/gpt-personas";
+import { generateAnswer } from "@/app/reusables/lib/core/features/generate-answer";
+import { CoachGPT } from "@/app/reusables/lib/utils/gpt-personas";
 
 let chatHistory = [...CoachGPT];
 
