@@ -1,16 +1,18 @@
 import "./globals.css";
 import "katex/dist/katex.min.css";
+import { Bitter } from "next/font/google";
 
 export const metadata = {
-  title: "Cygnet AI",
+  title: "Aarya AI",
   description: "AI tutor for all",
-  icons: "/images/favicon.ico",
 };
+
+const serif = Bitter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="max-w-xl mx-auto border shadow rounded p-4 mt-4">{children}</body>
+    <html lang="en" className={serif.className}>
+      <body className="max-w-xl mx-auto">{children}</body>
     </html>
   );
 }

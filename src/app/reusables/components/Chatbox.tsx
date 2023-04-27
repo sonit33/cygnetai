@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import AssistantResponse from "./AssistantResponse";
 
 interface Props {
   afterSubmit: (userQuestion: string, botResponse: string) => void;
+  className: string;
+  onBotResponse?: (response: string) => void;
 }
 
-export default function Chatbox({ afterSubmit }: Props) {
+export default function Chatbox({ afterSubmit, className }: Props) {
   const [userQuestion, setUserQuestion] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [botResponse, setBotResponse] = useState("");
@@ -53,10 +54,11 @@ export default function Chatbox({ afterSubmit }: Props) {
   };
 
   return (
-    <>
-      <div className="flex">
+    <div className={className}>
+      <div className="flex mt-2 p-4 border rounded shadow">
         <input
           type="text"
+          placeholder="Ask me anything related to math"
           className="border-cyan-600 rounded-md border text-sm p-1 shadow-md flex-1"
           value={userQuestion}
           maxLength={512}
@@ -79,9 +81,6 @@ export default function Chatbox({ afterSubmit }: Props) {
           Submit
         </button>
       </div>
-      <div className="markdown">
-        <AssistantResponse contents={botResponse}></AssistantResponse>
-      </div>
-    </>
+    </div>
   );
 }

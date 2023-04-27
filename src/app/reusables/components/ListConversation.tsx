@@ -6,23 +6,17 @@ import AssistantResponse from "./AssistantResponse";
 
 interface Props {
   chatHistory: Array<ConversationType>;
+  className: string;
 }
 
-export default function ListConversation({ chatHistory }: Props) {
+export default function ListConversation({ chatHistory, className }: Props) {
   const list = chatHistory.map((h) => {
     return (
       <div key={h.timestamp}>
         <AssistantResponse contents={h.assistant}></AssistantResponse>
-        <div className="font-bold mt-2">{h.user}</div>
+        <div className="font-bold">{h.user}</div>
       </div>
     );
   });
-  if (list.length > 0)
-    return (
-      <>
-        <div className="border-t border-gray-200"></div>
-        {list}
-      </>
-    );
-  else return <></>;
+  return <div className={className}>{list}</div>;
 }
