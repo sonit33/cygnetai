@@ -2,7 +2,7 @@ import Thumbnail from "./Thumbnail";
 
 export default function UserQuestion() {
   return (
-    <div className="flex bg-pink-50 items-center border-b border-pink-100">
+    <div className="flex items-center bg-blue-100">
       <div className="p-2">
         <Thumbnail type="user" />
       </div>

@@ -26,7 +26,7 @@ import UserQuestion from "./reusables/components/UserQuestion";
 
 export default function Home() {
   return (
-    <div className="flex flex-col h-screen justify-between relative border border-blue-50 shadow">
+    <div className="flex flex-col h-screen justify-between relative bg-gray-50">
       <div className="">
         <UserQuestion></UserQuestion>
         <BotResponse></BotResponse>
