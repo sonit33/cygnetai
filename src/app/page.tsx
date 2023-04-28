@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import BotResponse from "./reusables/components/BotResponse";
-import InputMessage from "./reusables/components/InputMessage";
+import TextInput from "./reusables/components/TextInput";
 import UserQuestion from "./reusables/components/UserQuestion";
 
 /**
@@ -26,15 +27,93 @@ import UserQuestion from "./reusables/components/UserQuestion";
  */
 
 export default function Home() {
+  const [inquiry, setInquiry] = useState("");
+  const [oldInquiry, setOldInquiry] = useState("");
+  const [stream, setStream] = useState("");
+  const [history, setHistory] = useState<Map<string, string>>(new Map());
+
+  const renderResponse = (history: Map<string, string>) => {
+    const result: Array<any> = [];
+    let index = 0;
+    history.forEach((value, key) => {
+      if (index < history.size - 1) {
+        result.push(
+          <div key={index++}>
+            <UserQuestion contents={key}></UserQuestion>
+            <BotResponse className="" contents={value}></BotResponse>
+          </div>
+        );
+      }
+    });
+    return result;
+  };
+
+  const appendHistory = (inquiry: string, response: string) => {
+    if (response.length > 0) {
+      history.set(inquiry, response);
+      setHistory(history);
+    }
+  };
+
+  const OnSubmit = async () => {
+    const text = inquiry;
+    setInquiry("");
+    await Inquire(text);
+  };
+
+  const Inquire = async (question: string) => {
+    setOldInquiry(question);
+    const res = await fetch("/api/question", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userQuestion: question,
+        botResponse: stream,
+      }),
+    });
+    if (res.ok) {
+      const data = res.body;
+      const chunks = [];
+      if (data) {
+        const reader = data.getReader();
+        const decoder = new TextDecoder();
+        let done = false;
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          const chunkValue = decoder.decode(value);
+          chunks.push(chunkValue);
+          setStream(chunks.join(""));
+        }
+        appendHistory(question, chunks.join(""));
+      }
+    }
+  };
   return (
-    <div className="flex flex-col h-screen justify-between relative bg-gray-50 shadow">
+    <div className="flex flex-col h-screen justify-end relative bg-gray-50 shadow">
+      <div className="">{renderResponse(history)}</div>
       <div className="">
-        <UserQuestion></UserQuestion>
-        <BotResponse className="text-sm" contents="some really long text from Open AI"></BotResponse>
+        <UserQuestion contents={oldInquiry}></UserQuestion>
+        <BotResponse className="" contents={stream}></BotResponse>
       </div>
       <div className="sticky w-full bottom-0 h-24 bg-orange-50 flex flex-col gap-2 justify-center px-4 border-t-2 border-orange-100">
-        <input type="text" className="w-full rounded border border-blue-200 p-2" placeholder="Enter some text to start" />
-        <InputMessage type="info" message="Aarya can be inaccurate sometimes about people, places, or facts." />
+        <TextInput
+          text={inquiry}
+          placeholder="Type your question then press enter to begin"
+          messageType="info"
+          message="Aarya can be inaccurate sometimes about people, places, or facts."
+          onType={(e) => {
+            const text = e.target.value;
+            setInquiry(text);
+          }}
+          onEnter={(e) => {
+            if (e.key === "Enter" && inquiry.length > 3) {
+              OnSubmit();
+            }
+          }}
+        />
       </div>
     </div>
   );
