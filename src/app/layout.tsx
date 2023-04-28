@@ -12,7 +12,9 @@ const serif = Bitter({ subsets: ["latin"] });
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={serif.className}>
-      <body className="max-w-2xl mx-auto">{children}</body>
+      <body style={{ backgroundImage: `url("./images/bg-tile.jpg")`, backgroundRepeat: "repeat" }} className="max-w-2xl mx-auto bg-slate-300">
+        {children}
+      </body>
     </html>
   );
 }

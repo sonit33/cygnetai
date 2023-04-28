@@ -1,6 +1,7 @@
 "use client";
 
 import BotResponse from "./reusables/components/BotResponse";
+import InputMessage from "./reusables/components/InputMessage";
 import UserQuestion from "./reusables/components/UserQuestion";
 
 /**
@@ -26,13 +27,14 @@ import UserQuestion from "./reusables/components/UserQuestion";
 
 export default function Home() {
   return (
-    <div className="flex flex-col h-screen justify-between relative bg-gray-50">
+    <div className="flex flex-col h-screen justify-between relative bg-gray-50 shadow">
       <div className="">
         <UserQuestion></UserQuestion>
-        <BotResponse></BotResponse>
+        <BotResponse className="text-sm" contents="some really long text from Open AI"></BotResponse>
       </div>
-      <div className="sticky w-full bottom-0 h-24 bg-blue-50 flex items-center px-4 ">
-        <input type="text" className="w-full rounded border border-blue-200 p-2" />
+      <div className="sticky w-full bottom-0 h-24 bg-orange-50 flex flex-col gap-2 justify-center px-4 border-t-2 border-orange-100">
+        <input type="text" className="w-full rounded border border-blue-200 p-2" placeholder="Enter some text to start" />
+        <InputMessage type="info" message="Aarya can be inaccurate sometimes about people, places, or facts." />
       </div>
     </div>
   );
