@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BotResponse from "./reusables/components/BotResponse";
 import TextInput from "./reusables/components/TextInput";
 import UserQuestion from "./reusables/components/UserQuestion";
+import ShowConversation from "./reusables/components/ShowConversation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * User experience same as the OpenAI page
@@ -31,22 +34,6 @@ export default function Home() {
   const [oldInquiry, setOldInquiry] = useState("");
   const [stream, setStream] = useState("");
   const [history, setHistory] = useState<Map<string, string>>(new Map());
-
-  const renderResponse = (history: Map<string, string>) => {
-    const result: Array<any> = [];
-    let index = 0;
-    history.forEach((value, key) => {
-      if (index < history.size - 1) {
-        result.push(
-          <div key={index++}>
-            <UserQuestion contents={key}></UserQuestion>
-            <BotResponse className="" contents={value}></BotResponse>
-          </div>
-        );
-      }
-    });
-    return result;
-  };
 
   const appendHistory = (inquiry: string, response: string) => {
     if (response.length > 0) {
@@ -92,16 +79,19 @@ export default function Home() {
     }
   };
   return (
-    <div className="flex flex-col h-screen justify-end relative bg-gray-50 shadow">
-      <div className="">{renderResponse(history)}</div>
-      <div className="">
-        <UserQuestion contents={oldInquiry}></UserQuestion>
-        <BotResponse className="" contents={stream}></BotResponse>
-      </div>
-      <div className="sticky w-full bottom-0 h-24 bg-orange-50 flex flex-col gap-2 justify-center px-4 border-t-2 border-orange-100">
+    <div className="flex flex-col min-h-screen justify-end relative">
+      <ShowConversation history={history} />
+      {oldInquiry.length > 0 && (
+        <div>
+          <UserQuestion contents={oldInquiry}></UserQuestion>
+          <BotResponse className="" contents={stream}></BotResponse>
+        </div>
+      )}
+      <div className="sticky w-full bottom-0 bg-orange-50 flex flex-col gap-2 justify-center p-4 border-t-2 border-orange-100">
+        <FontAwesomeIcon icon={faPaperPlane} className="absolute right-7 top-7 text-gray-200" />
         <TextInput
           text={inquiry}
-          placeholder="Type your question then press enter to begin"
+          placeholder="Send a message."
           messageType="info"
           message="Aarya can be inaccurate sometimes about people, places, or facts."
           onType={(e) => {

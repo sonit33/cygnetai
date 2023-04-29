@@ -17,7 +17,7 @@ export default function BotResponse({
 }: Props) {
   return (
     <div className="flex flex-col bg-blue-50">
-      <div className="flex items-center">
+      <div className="flex items-start">
         <div className="p-2">
           <Thumbnail type={"bot"} />
         </div>
