@@ -4,7 +4,7 @@ import { useState } from "react";
 import BotResponse from "./reusables/components/BotResponse";
 import TextInput from "./reusables/components/TextInput";
 import UserQuestion from "./reusables/components/UserQuestion";
-import ShowConversation from "./reusables/components/ShowConversation";
+import Conversation from "./reusables/components/Conversation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,37 +29,47 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
  * @returns
  */
 
-export default function Home() {
-  const [inquiry, setInquiry] = useState("");
-  const [oldInquiry, setOldInquiry] = useState("");
-  const [stream, setStream] = useState("");
-  const [history, setHistory] = useState<Map<string, string>>(new Map());
+interface Message {
+  id: number;
+  role: "user" | "assistant";
+  content: string;
+}
 
-  const appendHistory = (inquiry: string, response: string) => {
-    if (response.length > 0) {
-      history.set(inquiry, response);
-      setHistory(history);
-    }
-  };
+export default function Home() {
+  const [lastInquiry, setlastInquiry] = useState("");
+  const [inquiry, setInquiry] = useState("");
+  const [botResponse, setBotResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const OnSubmit = async () => {
-    const text = inquiry;
+    setLoading(true);
+    await Inquire();
     setInquiry("");
-    await Inquire(text);
+    setLoading(false);
   };
 
-  const Inquire = async (question: string) => {
-    setOldInquiry(question);
-    const res = await fetch("/api/question", {
+  const Inquire = async () => {
+    setlastInquiry(inquiry);
+    const inquiryBody: Array<Message> = [
+      {
+        id: Date.now(),
+        content: botResponse,
+        role: "assistant",
+      },
+      {
+        id: Date.now() + 1,
+        content: inquiry,
+        role: "user",
+      },
+    ];
+    const params = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        userQuestion: question,
-        botResponse: stream,
-      }),
-    });
+      body: JSON.stringify(inquiryBody),
+    };
+    const res = await fetch("/api/chat", params);
     if (res.ok) {
       const data = res.body;
       const chunks = [];
@@ -72,21 +82,18 @@ export default function Home() {
           done = doneReading;
           const chunkValue = decoder.decode(value);
           chunks.push(chunkValue);
-          setStream(chunks.join(""));
+          setBotResponse(chunks.join(""));
         }
-        appendHistory(question, chunks.join(""));
       }
     }
   };
   return (
     <div className="flex flex-col min-h-screen justify-end relative">
-      <ShowConversation history={history} />
-      {oldInquiry.length > 0 && (
-        <div>
-          <UserQuestion contents={oldInquiry}></UserQuestion>
-          <BotResponse className="" contents={stream}></BotResponse>
-        </div>
-      )}
+      <div>
+        <Conversation trigger={loading} />
+        <UserQuestion contents={lastInquiry} />
+        <BotResponse contents={botResponse} />
+      </div>
       <div className="sticky w-full bottom-0 bg-orange-50 flex flex-col gap-2 justify-center p-4 border-t-2 border-orange-100">
         <FontAwesomeIcon icon={faPaperPlane} className="absolute right-7 top-7 text-gray-200" />
         <TextInput
@@ -94,12 +101,9 @@ export default function Home() {
           placeholder="Send a message."
           messageType="info"
           message="Aarya can be inaccurate sometimes about people, places, or facts."
-          onType={(e) => {
-            const text = e.target.value;
-            setInquiry(text);
-          }}
+          onType={(e) => setInquiry(e.target.value)}
           onEnter={(e) => {
-            if (e.key === "Enter" && inquiry.length > 3) {
+            if (e.key === "Enter" && inquiry.length > 1) {
               OnSubmit();
             }
           }}

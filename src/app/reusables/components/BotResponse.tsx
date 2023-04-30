@@ -5,16 +5,11 @@ import Thumbnail from "./Thumbnail";
 import FeedbackIcons from "./FeedbackIcons";
 
 interface Props {
-  className: string;
+  className?: string;
   contents: string;
-  placeholder?: string;
 }
 
-export default function BotResponse({
-  className,
-  contents,
-  placeholder = "Hello! I am Aarya. I will help you with your Math questions.",
-}: Props) {
+export default function BotResponse({ className, contents }: Props) {
   return (
     <div className="flex flex-col bg-blue-50">
       <div className="flex items-start">
@@ -24,7 +19,7 @@ export default function BotResponse({
         <div className="p-2">
           <div className={`markdown ${className}`}>
             <ReactMarkdown
-              children={contents.length > 0 ? contents : placeholder}
+              children={contents}
               remarkPlugins={[remarkMath]}
               rehypePlugins={[rehypeKatex]}
             ></ReactMarkdown>

@@ -21,6 +21,8 @@ export async function POST(request: Request): Promise<Response> {
     content: decorate(userQuestion),
   });
 
+  console.log(chatHistory);
+
   try {
     const stream = await generateAnswer(chatHistory);
     return new Response(stream);
