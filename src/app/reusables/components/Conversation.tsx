@@ -33,7 +33,11 @@ export default function Conversation({ trigger }: Props) {
   const list = messages.map((m) => {
     return (
       <div key={m.id}>
-        {m.role == "user" && <UserQuestion contents={m.content} />}
+        {m.role == "user" && (
+          <div className="bg-slate-100 border-b-2 border-t-2 border-slate-200">
+            <UserQuestion contents={m.content} />
+          </div>
+        )}
         {m.role == "assistant" && <BotResponse contents={m.content} />}
       </div>
     );

@@ -7,6 +7,7 @@ interface Props {
   onEnter: (e: any) => void;
   messageType: "info" | "warning" | "error";
   message: string;
+  disable: boolean;
 }
 export default function TextInput({
   placeholder,
@@ -15,13 +16,15 @@ export default function TextInput({
   text,
   messageType,
   message,
+  disable,
 }: Props) {
   return (
     <>
       <input
         value={text}
+        disabled={disable}
         type="text"
-        className="w-full rounded border border-blue-200 p-2"
+        className="w-full rounded border border-blue-200 p-2 disabled:border-gray-200 disabled:bg-gray-100"
         placeholder={placeholder}
         onChange={onType}
         onKeyDown={onEnter}

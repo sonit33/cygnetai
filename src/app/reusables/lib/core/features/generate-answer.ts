@@ -1,16 +1,9 @@
 import { getOpenApiKey } from "../../utils/env-reader";
 import { toReadableStream } from "../../utils/readable-stream";
-import { ChatCompletionPayload } from "../types/ChatCompletionPayload";
-import { GPTMessage } from "../types/GPTMessage";
+import { GPTPayload } from "../types/GPTPayload";
 
-export function generateAnswer(history: Array<GPTMessage>): Promise<ReadableStream<any>> {
+export function generateAnswer(payload: GPTPayload): Promise<ReadableStream<any>> {
   const encoder = new TextEncoder();
-  const payload: ChatCompletionPayload = {
-    model: "gpt-3.5-turbo",
-    messages: history,
-    stream: true,
-    temperature: 0,
-  };
   return toReadableStream(
     async () => {
       const opts = {

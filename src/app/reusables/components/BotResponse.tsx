@@ -3,20 +3,30 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import Thumbnail from "./Thumbnail";
 import FeedbackIcons from "./FeedbackIcons";
+import { useEffect, useRef } from "react";
 
 interface Props {
   className?: string;
   contents: string;
+  loading?: boolean;
 }
 
-export default function BotResponse({ className, contents }: Props) {
+export default function BotResponse({ className, contents, loading }: Props) {
+  const scrollRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [loading]);
+
   return (
-    <div className="flex flex-col bg-blue-50">
+    <div ref={scrollRef} className="flex flex-col mx-auto max-w-2xl">
       <div className="flex items-start">
         <div className="p-2">
           <Thumbnail type={"bot"} />
         </div>
-        <div className="p-2">
+        <div className="p-2 py-4">
           <div className={`markdown ${className}`}>
             <ReactMarkdown
               children={contents}

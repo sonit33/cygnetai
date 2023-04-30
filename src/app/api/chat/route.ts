@@ -1,5 +1,6 @@
 import { generateAnswer } from "@/app/reusables/lib/core/features/generate-answer";
 import { GPTMessage } from "@/app/reusables/lib/core/types/GPTMessage";
+import { GPTPayload } from "@/app/reusables/lib/core/types/GPTPayload";
 import { Message } from "@/app/reusables/lib/core/types/Message";
 
 const Messages: Array<Message> = [];
@@ -24,7 +25,14 @@ export async function POST(request: Request): Promise<Response> {
   });
 
   try {
-    const stream = await generateAnswer(gptMessages);
+    const payload: GPTPayload = {
+      model: "gpt-3.5-turbo",
+      messages: gptMessages,
+      stream: true,
+      temperature: 0.4,
+      max_tokens: 255,
+    };
+    const stream = await generateAnswer(payload);
     return new Response(stream);
   } catch (e: any) {
     console.error(e.message);

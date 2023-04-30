@@ -6,10 +6,6 @@
   @apply block overflow-auto;
 }
 
-code {
-  @apply bg-slate-100 text-xs p-1 mt-1 rounded-sm shadow inline-block;
-}
-
 .markdown ol li {
   @apply list-decimal ml-4;
 }
