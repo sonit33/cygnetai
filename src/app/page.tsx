@@ -7,6 +7,7 @@ import UserQuestion from "./reusables/components/UserQuestion";
 import Conversation from "./reusables/components/Conversation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { Message } from "./reusables/lib/core/types/Message";
 
 /**
  * User experience same as the OpenAI page
@@ -28,12 +29,6 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
  * 3.2 Show session info e.g. generated a name and start time
  * @returns
  */
-
-interface Message {
-  id: number;
-  role: "user" | "assistant";
-  content: string;
-}
 
 export default function Home() {
   const [lastInquiry, setlastInquiry] = useState("");

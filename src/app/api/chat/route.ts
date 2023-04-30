@@ -1,14 +1,6 @@
 import { generateAnswer } from "@/app/reusables/lib/core/features/generate-answer";
 import { GPTMessage } from "@/app/reusables/lib/core/types/GPTMessage";
-// import { CoachGPT } from "@/app/reusables/lib/utils/gpt-personas";
-
-// let chatHistory = [...CoachGPT];
-
-interface Message {
-  id: number;
-  role: "user" | "assistant" | "system";
-  content: string;
-}
+import { Message } from "@/app/reusables/lib/core/types/Message";
 
 const Messages: Array<Message> = [];
 

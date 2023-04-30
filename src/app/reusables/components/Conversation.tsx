@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import UserQuestion from "./UserQuestion";
 import BotResponse from "./BotResponse";
-
-interface Message {
-  id: number;
-  role: "user" | "assistant";
-  content: string;
-}
+import { Message } from "../lib/core/types/Message";
 
 interface Props {
   trigger: boolean;
