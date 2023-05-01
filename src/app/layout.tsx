@@ -1,3 +1,4 @@
+import { Open_Sans } from "next/font/google";
 import { Bitter } from "next/font/google";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
@@ -12,11 +13,12 @@ export const metadata = {
   description: "AI tutor for all",
 };
 
+const sans = Open_Sans({ subsets: ["latin"] });
 const serif = Bitter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.className}`}>
+    <html lang="en" className={`${sans.className}`}>
       <body className="bg-slate-50 text-sm md:text-base lg:text-lg text-black">{children}</body>
     </html>
   );

@@ -21,12 +21,12 @@ export default function BotResponse({ className, contents, loading }: Props) {
   }, [loading]);
 
   return (
-    <div ref={scrollRef} className="flex flex-col mx-auto max-w-2xl">
+    <div ref={scrollRef} className="flex flex-col mx-auto max-w-lg lg:max-w-xl xl:max-w-2xl">
       <div className="flex items-start">
         <div className="p-2">
           <Thumbnail type={"bot"} />
         </div>
-        <div className="p-2 py-4">
+        <div className="p-4">
           <div className={`markdown ${className}`}>
             <ReactMarkdown
               children={contents}
