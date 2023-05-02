@@ -2,7 +2,7 @@
 
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BotResponse from "../_reusables/components/BotResponse";
 import Conversation from "../_reusables/components/Conversation";
 import TextInput from "../_reusables/components/TextInput";

@@ -40,11 +40,11 @@ export async function login() {
 }
 
 export function isLoggedIn() {
-  return getAuth().currentUser != null;
+  return getAuth(app).currentUser != null;
 }
 
 export function getCurrentUser(): UserInfo {
-  return getAuth().currentUser as UserInfo;
+  return getAuth(app).currentUser as UserInfo;
 }
 
 export async function logout() {

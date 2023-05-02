@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { isLoggedIn } from "../lib/utils/google-auth";
 
-export { RouteGuard };
-
 interface Props {
   children: any;
 }
 
-function RouteGuard({ children }: Props) {
+export default function RouteGuard({ children }: Props) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
 
