@@ -2,33 +2,12 @@
 
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import BotResponse from "../reusables/components/BotResponse";
-import Conversation from "../reusables/components/Conversation";
-import TextInput from "../reusables/components/TextInput";
-import UserQuestion from "../reusables/components/UserQuestion";
-import { Message } from "../reusables/lib/core/types/Message";
-
-/**
- * User experience same as the OpenAI page
- * The page needs a main section, a left-side panel for past sessions, Start a new session button on the panel
- * Previous sessions read-only
- * Start a new session to chat
- * When the session is active:
- * 1. Place a text box at the bottom of the page for accepting prompts.
- * 1.1 Enter to submit
- * 1.2 A submit button with a paper plane icon
- * 2. Chat history section on top
- * 2.1 Question asked and the streaming response rolls up the page in a section
- * 2.2 Prompt and response in a separate visual hierarchy
- * 2.3 Thumbs up or down at the top-right of the response section
- * 2.4 Aarya logo in response section
- * 2.5 User thumbnail in the question section
- * 3. A fixed navbar at the top
- * 3.1 End the session button
- * 3.2 Show session info e.g. generated a name and start time
- * @returns
- */
+import { useEffect, useState } from "react";
+import BotResponse from "../_reusables/components/BotResponse";
+import Conversation from "../_reusables/components/Conversation";
+import TextInput from "../_reusables/components/TextInput";
+import UserQuestion from "../_reusables/components/UserQuestion";
+import { Message } from "../_reusables/lib/core/types/Message";
 
 export default function Home() {
   const [lastInquiry, setlastInquiry] = useState("");

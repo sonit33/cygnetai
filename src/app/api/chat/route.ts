@@ -1,7 +1,7 @@
-import { generateAnswer } from "@/app/reusables/lib/core/features/generate-answer";
-import { GPTMessage } from "@/app/reusables/lib/core/types/GPTMessage";
-import { GPTPayload } from "@/app/reusables/lib/core/types/GPTPayload";
-import { Message } from "@/app/reusables/lib/core/types/Message";
+import { generateAnswer } from "@/app/_reusables/lib/core/features/generate-answer";
+import { GPTMessage } from "@/app/_reusables/lib/core/types/GPTMessage";
+import { GPTPayload } from "@/app/_reusables/lib/core/types/GPTPayload";
+import { Message } from "@/app/_reusables/lib/core/types/Message";
 
 const Messages: Array<Message> = [];
 

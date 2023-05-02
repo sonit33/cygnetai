@@ -2,13 +2,16 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/
 import { firebaseInit } from "./firebase-init";
 
 export interface UserInfo {
+  uid?: string | null;
+  providerId?: string | null;
+  accessToken?: string | null;
   displayName?: string | null;
   email?: string | null;
   metadata?: {
-    createdAt?: string;
-    creationTime?: string;
-    lastLoginAt?: string;
-    lastSignInTime?: string;
+    createdAt?: string | null;
+    creationTime?: string | null;
+    lastLoginAt?: string | null;
+    lastSignInTime?: string | null;
   };
   photoUrl?: string | null;
 }
@@ -24,7 +27,7 @@ export async function login() {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       if (credential) {
         const token = credential.accessToken;
-        const user = result.user;
+        const user: UserInfo = result.user;
         return { token, user };
       }
       throw new Error("Credentials returned undefined");
@@ -34,6 +37,14 @@ export async function login() {
     console.log(e);
     throw new Error(`Login failed: ${e.message}`);
   }
+}
+
+export function isLoggedIn() {
+  return getAuth().currentUser != null;
+}
+
+export function getCurrentUser(): UserInfo {
+  return getAuth().currentUser as UserInfo;
 }
 
 export async function logout() {
